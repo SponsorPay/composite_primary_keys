@@ -1,7 +1,7 @@
 module CompositePrimaryKeys
   module ActiveRecord
     module Overides
- 
+
       # This override ensures that pkeys are set on the instance when records are created.
       # However, while ActiveRecord::Persistence defines a create_record method
       # the call in create_or_update is actually calling the method create_record in the Dirty concern
@@ -14,7 +14,7 @@ module CompositePrimaryKeys
         attributes_values = arel_attributes_with_values_for_create(attribute_names)
 
         new_id = self.class.unscoped.insert attributes_values
-        self.id = new_id if self.class.primary_key
+        self.id = new_id if self.class.primary_key && new_id.kind_of?(Array)
 
         @new_record = false
         id
